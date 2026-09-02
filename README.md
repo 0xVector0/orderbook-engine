@@ -119,6 +119,14 @@ Simple three-component design:
 - HTTP Server: Flask API for order placement and queries
 - WebSocket Server: Real-time streaming of trades and updates
 
+### Why a sorted list
+
+A plain list would make insertion O(1) but finding the best bid or ask O(n),
+since you would have to scan every resting order on each match. Keeping both
+sides sorted costs O(log n) per insertion and makes the best price O(1): it is
+always at the end of the list. Matching touches the book far more often than
+insertion does, so that is the right trade.
+
 ## File Structure
 
 ```
